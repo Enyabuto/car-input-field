@@ -1,36 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
+
+import { useForm } from "../hooks/useForm";
 
 export const CarForm = ({ onSubmitCar, buttonText }) => {
   const [
-    carForm, // state data
-    setCarForm, // function to update the state data and re-render.
-  ] = useState(
+    carForm, 
+    change,
+    resetCarForm,
+  ] = useForm(
     {
       make: "",
       model: "",
       year: 1900,
       color: "",
       price: 0,
-    } /* intial state data, and is only used on the intial render */
+    }
   );
 
-  const change = ({ target: { name, type, value } }) => {
-    setCarForm({
-      ...carForm,
-      [name]: type === "number" ? Number(value) : value,
-    });
-  };
+  
 
   const submitCar = () => {
     onSubmitCar({ ...carForm });
-    setCarForm({
-      make: "",
-      model: "",
-      year: 1900,
-      color: "",
-      price: 0,
-    });
+    resetCarForm();
   };
 
   return (
